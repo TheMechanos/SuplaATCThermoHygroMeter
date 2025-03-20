@@ -40,6 +40,7 @@ private:
     constexpr static const int16_t RSSI_MIN = -90;
     constexpr static const int16_t RSSI_MAX = -40;
 
+    
     void onBLEResult(String mac, const NimBLEAdvertisedDevice* device);
 
     void onInit() override;
