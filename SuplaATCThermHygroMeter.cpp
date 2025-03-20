@@ -18,6 +18,8 @@ ATCThermHygroMeter::ATCThermHygroMeter(unsigned long validTimeTicks)
 ATCThermHygroMeter::ATCThermHygroMeter(String mac, unsigned long validTimeTicks)
     : ATCThermHygroMeter(validTimeTicks) {
     this->mac = mac;
+
+    SUPLA_LOG_INFO("ATCSupla: New ATC_THM created! MAC=|%s|", mac.c_str());
 }
 
 ATCThermHygroMeter::ATCThermHygroMeter(Supla::Html::CustomTextParameter* param, unsigned long validTimeTicks)
@@ -27,6 +29,8 @@ ATCThermHygroMeter::ATCThermHygroMeter(Supla::Html::CustomTextParameter* param, 
 
     param->getParameterValue(ms, 20);
     this->mac = String(ms);
+
+    SUPLA_LOG_INFO("ATCSupla: New ATC_THM created! MAC=|%s|", mac.c_str());
 }
 
 ATCThermHygroMeter::~ATCThermHygroMeter() { controller.unregisterATC(this); }
@@ -47,6 +51,7 @@ void ATCThermHygroMeter::iterateAlways() {
         humi = HUMIDITY_NOT_AVAILABLE;
         channel.setOffline();
         sendNewValue();
+        SUPLA_LOG_DEBUG("ATCSupla: Sensor |%s| is going offline!", mac.c_str());
     }
 }
 
@@ -77,7 +82,7 @@ void ATCThermHygroMeter::onBLEResult(String mac, const NimBLEAdvertisedDevice* d
 
         lastDataReceiveTick = millis();
 
-        SUPLA_LOG_DEBUG("BLE: Received from [%s] = Temp: %0.1f°C, Humi: %0.0f%%, Bat: %0.0f%% RSSI: %d->%u%%\n", mac.c_str(), temp, humi, bat, device->getRSSI(), rssiPercent);
+        SUPLA_LOG_DEBUG("ATCSupla: Received from [%s] = Temp: %0.1f°C, Humi: %0.0f%%, Bat: %0.0f%% RSSI: %d->%u%%", mac.c_str(), temp, humi, bat, device->getRSSI(), rssiPercent);
     }
 }
 
@@ -152,9 +157,6 @@ void ATCThermHygroMeterController::iterate() {
 }
 
 void ATCThermHygroMeterController::onResult(const NimBLEAdvertisedDevice* advertisedDevice) {
-
-    // Serial.printf("BLE: Device result: %s\n", advertisedDevice->toString().c_str());
-    // Serial.printf("BLE: onResult\n");
 
     if (advertisedDevice->haveServiceData()) {
         String macAddress = advertisedDevice->getAddress().toString().c_str();
