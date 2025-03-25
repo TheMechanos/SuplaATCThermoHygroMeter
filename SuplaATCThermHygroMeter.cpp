@@ -10,8 +10,8 @@ ATCThermHygroMeter::ATCThermHygroMeter(unsigned long validTimeTicks)
 
     sendNewValue();
     channel.setBatteryPowered(true);
-    channel.setOffline();
-    
+    channel.setStateOffline();
+
     controller.registerATC(this);
 }
 
@@ -49,7 +49,7 @@ void ATCThermHygroMeter::iterateAlways() {
     if (millis() - lastDataReceiveTick > validTimeTicks && temp != TEMPERATURE_NOT_AVAILABLE && humi != HUMIDITY_NOT_AVAILABLE) {
         temp = TEMPERATURE_NOT_AVAILABLE;
         humi = HUMIDITY_NOT_AVAILABLE;
-        channel.setOffline();
+        channel.setStateOffline();
         sendNewValue();
         SUPLA_LOG_DEBUG("ATCSupla: Sensor |%s| is going offline!", mac.c_str());
     }
@@ -73,16 +73,17 @@ void ATCThermHygroMeter::onBLEResult(String mac, const NimBLEAdvertisedDevice* d
 
         this->temp = rawTemperature * 0.1;
         this->humi = (float)(data[8]);
-        int bat = data[9];
+        uint8_t bat = data[9];
 
         channel.setBatteryLevel(bat);
         channel.setBridgeSignalStrength(rssiPercent);
-        channel.setOnline();
+        channel.setStateOnline();
         sendNewValue();
 
         lastDataReceiveTick = millis();
 
-        SUPLA_LOG_DEBUG("ATCSupla: Received from [%s] = Temp: %0.1f°C, Humi: %0.0f%%, Bat: %0.0f%% RSSI: %d->%u%%", mac.c_str(), temp, humi, bat, device->getRSSI(), rssiPercent);
+        SUPLA_LOG_DEBUG("ATCSupla: Received from [%s] = Temp: %0.1f°C, Humi: %0.0f%%, Bat: %u%% RSSI: %d->%u%%", mac.c_str(), temp, humi, bat,
+            device->getRSSI(), rssiPercent);
     }
 }
 
@@ -106,6 +107,7 @@ ATCThermHygroMeterController::ATCThermHygroMeterController()
 void ATCThermHygroMeterController::configScan(unsigned long scanTimeMs, unsigned long scanIntervalMs) {
     this->scanTimeMs = scanTimeMs;
     this->scanIntervalMs = scanIntervalMs;
+    SUPLA_LOG_DEBUG("ATCSupla: BLE confgured to scan in %us interval for %us", scanIntervalMs / 1000, scanTimeMs / 1000);
 }
 
 void ATCThermHygroMeterController::init() {

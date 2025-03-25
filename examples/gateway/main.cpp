@@ -79,7 +79,7 @@ void setup() {
     }
 
     ATCThermHygroMeter::configScan(scanTime.getParameterValue() * 1000, scanInterval.getParameterValue() * 1000);
-
+    
     SuplaDevice.setSuplaCACert(suplaCACert);
     SuplaDevice.setSupla3rdPartyCACert(supla3rdCACert);
 

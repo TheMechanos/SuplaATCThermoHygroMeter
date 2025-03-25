@@ -1,6 +1,6 @@
 {
     "name": "SuplaATCThermoHygroMeter",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Library for Supla to use ATC TheroHygroMeters over BLE.",
     "keywords": [
         "supla",
@@ -22,7 +22,7 @@
     "dependencies": [
         {
             "name": "supla-device",
-            "repository": "https://github.com/SUPLA/supla-device.git"
+            "version": "https://github.com/SUPLA/supla-device.git#v25.2"
         },
         {
             "name": "NimBLE-Arduino",
