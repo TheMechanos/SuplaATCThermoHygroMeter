@@ -32,6 +32,13 @@
     ],
     "examples": [
         {
+            "name": "ATC2Supla Single",
+            "base": "examples/single",
+            "files": [
+                "main.cpp"
+            ]
+        },
+        {
             "name": "ATC2Supla Gateway",
             "base": "examples/gateway",
             "files": [
