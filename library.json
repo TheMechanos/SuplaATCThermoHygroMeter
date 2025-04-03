@@ -1,6 +1,6 @@
 {
     "name": "SuplaATCThermoHygroMeter",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Library for Supla to use ATC TheroHygroMeters over BLE.",
     "keywords": [
         "supla",

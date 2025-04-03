@@ -18,8 +18,6 @@
 #include <SuplaATCThermHygroMeter.hpp>
 
 
-
-
 #define DEV_NAME "ATC2Supla"
 
 #define PIN_CFG GPIO_NUM_0
