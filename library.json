@@ -1,0 +1,56 @@
+{
+    "name": "SuplaATCThermoHygroMeter",
+    "version": "1.0.2",
+    "description": "Library for Supla to use ATC TheroHygroMeters over BLE.",
+    "keywords": [
+        "supla",
+        "supla-device",
+        "ATC",
+        "TheroHygroMeter"
+    ],
+    "authors": {
+        "name": "Sebastian Koczur",
+        "email": "themechanos@gmail.com",
+        "url": "http://skoczur.pl"
+    },
+    "frameworks": "arduino",
+    "platforms": "espressif32",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/TheMechanos/SuplaATCThermoHygroMeter.git"
+    },
+    "dependencies": [
+        {
+            "name": "supla-device",
+            "version": "https://github.com/SUPLA/supla-device.git#v25.2"
+        },
+        {
+            "name": "NimBLE-Arduino",
+            "owner": "h2zero",
+            "version": "^2.2.1"
+        }
+    ],
+    "examples": [
+        {
+            "name": "ATC2Supla Single",
+            "base": "examples/single",
+            "files": [
+                "main.cpp"
+            ]
+        },
+        {
+            "name": "ATC2Supla Gateway",
+            "base": "examples/gateway",
+            "files": [
+                "main.cpp"
+            ]
+        },
+        {
+            "name": "ATC Supla Thermostat",
+            "base": "examples/thermostat",
+            "files": [
+                "main.cpp"
+            ]
+        }
+    ]
+}
